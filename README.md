@@ -1,0 +1,2 @@
+# termux
+my termux config
