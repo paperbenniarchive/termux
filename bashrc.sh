@@ -1,13 +1,23 @@
+#!/bin/bash
+
+clear
+
 alias a="cd ~/storage/shared"
 alias q=exit
+alias v=nvim
 
-pb() {
-    source /usr/share/paperbash/import.sh || return 1
-    pb $@
-}
-
-gclone() {
-    git clone --depth=1 https://github.com/$1.git
-}
+set -o vi
 
 export PATH=$PATH:~/bin
+
+yt(){
+    if ! [ -e ~/storage/shared/Music ]
+    then
+        echo "please set up your music directory first"
+        return 1
+    fi
+
+    cd ~/storage/shared/Music
+    youtube-dl -x "$@"
+}
+

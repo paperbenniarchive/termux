@@ -1,9 +1,7 @@
 #!/bin/bash
 
-if ! ping -c 1 google.com &>/dev/null; then
-    echo "internet access required"
-    exit 1
-fi
+# this is my personal termux config
+# run this on a fresh termux install
 
 if ! command -v termux-setup-storage &>/dev/null; then
     echo "error: not running on termux"
@@ -29,9 +27,31 @@ checkcommand git
 checkcommand ranger
 checkcommand nvim neovim
 
-cd $PREFIX/tmp
-git clone --depth=1 https://github.com/paperbenni/termux.git
-cd termux
+if ! [ -e  ~/storage/shared ]
+then
+    termux-setup-storage
+fi
+
+if ! [ -e .bashrc ] || ! git status
+then
+    mkdir ~/workspace
+    cd ~/workspace
+    git clone --depth=1 https://github.com/paperbenni/termux
+    cd termux
+    git pull
+fi
 
 chmod +x *.sh
 cat bashrc.sh >~/.bashrc
+
+if ! command -v i
+then
+    echo "installing instantos build tools"
+    cd ~/workspace
+    git clone --depth=1 https://github.com/instantos/instantTOOLS
+    cd instantTOOLS
+    git pull
+    ./bashrc.sh
+fi
+
+echo "finished setting up paperbenni's termux"
