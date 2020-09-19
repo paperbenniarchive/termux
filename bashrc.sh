@@ -25,6 +25,17 @@ musicback(){
     if ! [ -e ~/storage/shared/Music ]
     then
         echo "not backing up"
+        return
     fi
     rclone sync -P ~/storage/shared/Music music:Music
 }
+
+pullmusic(){
+    if ! [ -e ~/storage/shared/Music ]
+    then
+        echo "not pulling up"
+        return
+    fi
+    rclone sync -P music:Music ~/storage/shared/Music
+}
+
