@@ -21,3 +21,10 @@ yt(){
     youtube-dl -x "$@"
 }
 
+musicback(){
+    if ! [ -e ~/storage/shared/Music ]
+    then
+        echo "not backing up"
+    fi
+    rclone sync -P ~/storage/shared/Music music:Music
+}
