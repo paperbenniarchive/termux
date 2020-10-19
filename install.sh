@@ -54,4 +54,15 @@ then
     ./bashrc.sh
 fi
 
+mkdir -p ~/.config/instantos/default
+
+ln -s "$(which termux-open-url)" ~/.config/instantos/default/browser
+
+if ! [ -e ~/.config/instantos/quickmenu ]
+then
+    cd ~/.config/instantos
+    git clone --depth=1 https://github.com/paperbenni/quickmenus quickmenu
+fi
+
 echo "finished setting up paperbenni's termux"
+
