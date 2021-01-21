@@ -9,10 +9,14 @@ if ! command -v termux-setup-storage &>/dev/null; then
 fi
 
 echo "installing paperbenni's termux config"
-pkg upgrade
 
 checkcommand() {
     if ! command -v "$1" &>/dev/null; then
+	if [ -z "$HASUPDATED" ]
+	then
+	    pkg upgrade
+	    export HASUPDATED=true
+	fi
         if [ -n "$2" ]; then
             apt-get install -y "$2"
         else
@@ -22,7 +26,6 @@ checkcommand() {
 }
 
 checkcommand curl
-checkcommand neovim
 checkcommand git
 checkcommand ranger
 checkcommand nvim neovim
@@ -32,8 +35,10 @@ then
     termux-setup-storage
 fi
 
-if ! [ -e .bashrc ] || ! git status
+if [ -e ./bashrc.sh ] && git status &> /dev/null
 then
+    echo "found termux repo"
+else
     mkdir ~/workspace
     cd ~/workspace
     git clone --depth=1 https://github.com/paperbenni/termux
@@ -51,12 +56,14 @@ then
     git clone --depth=1 https://github.com/instantos/instantTOOLS
     cd instantTOOLS
     git pull
-    ./bashrc.sh
+    ./install.sh
 fi
 
-mkdir -p ~/.config/instantos/default
+[ -e ~/.config/instantos/default ] || mkdir -p ~/.config/instantos/default
 
-ln -s "$(which termux-open-url)" ~/.config/instantos/default/browser
+
+[ -e ~/.config/instantos/default/browser ] || 
+	ln -s "$(which termux-open-url)" ~/.config/instantos/default/browser
 
 if ! [ -e ~/.config/instantos/quickmenu ]
 then
