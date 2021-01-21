@@ -1,11 +1,6 @@
 #!/bin/bash
 
 clear
-
-alias a="cd ~/storage/shared"
-alias q=exit
-alias v=nvim
-
 set -o vi
 
 export PATH=$PATH:~/bin
@@ -39,3 +34,7 @@ pullmusic(){
     rclone sync -P music:Music ~/storage/shared/Music
 }
 
+alias a="cd ~/storage/shared || termux-setup-storage"
+alias q=exit
+alias v=nvim
+alias t=task
