@@ -26,7 +26,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait"1" lucid
 zinit light zsh-users/zsh-completions
 zinit ice wait"1" lucid
-zinit snippet OMZP::fzf
 
 autoload -Uz compinit
 compinit
@@ -34,8 +33,6 @@ compinit
 zinit light agkozak/zsh-z
 
 bindkey -e
-
-zinit light Aloxaf/fzf-tab
 
 clear
 set -o vi
@@ -77,3 +74,6 @@ alias v=nvim
 alias t=task
 alias g=git
 
+zstyle ':completion:*' menu yes select
+
+bindkey '^R' history-incremental-search-backward
