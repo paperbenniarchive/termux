@@ -41,33 +41,40 @@ set -o vi
 
 export PATH=$PATH:~/bin
 
+if [ -e ~/storage/shared/external-1/Music ]
+then
+    export MUSIC="$HOME/storage/external-1/Music"
+else
+    export MUSIC="$HOME/storage/shared/Music"
+fi
+
 yt(){
-    if ! [ -e ~/storage/shared/Music ]
+    if ! [ -e "$MUSIC" ]
     then
         echo "please set up your music directory first"
         return 1
     fi
 
-    cd ~/storage/shared/Music
-    youtube-dl -x "$@"
+    cd "$MUSIC"
+    youtube-dl -x --format bestaudio --add-metadata "$@"
 }
 
 musicback(){
-    if ! [ -e ~/storage/shared/Music ]
+    if ! [ -e "$MUSIC" ]
     then
         echo "not backing up"
         return
     fi
-    rclone sync -P ~/storage/shared/Music music:Music
+    rclone sync -P "$MUSIC" music:Music
 }
 
 pullmusic(){
-    if ! [ -e ~/storage/shared/Music ]
+    if ! [ -e "$MUSIC" ]
     then
         echo "not pulling up"
         return
     fi
-    rclone sync -P music:Music ~/storage/shared/Music
+    rclone sync -P music:Music "$MUSIC"
 }
 
 alias a="cd ~/storage/shared || termux-setup-storage"
