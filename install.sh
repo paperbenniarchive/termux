@@ -35,7 +35,7 @@ then
     termux-setup-storage
 fi
 
-if [ -e ./bashrc.sh ] && git status &> /dev/null
+if [ -e ./zshrc ] && git status &> /dev/null
 then
     echo "found termux repo"
 else
@@ -48,6 +48,7 @@ fi
 
 chmod +x *.sh
 cat bashrc.sh >~/.bashrc
+cat zshrc >~/.zshrc
 
 if ! command -v i
 then
@@ -69,6 +70,14 @@ if ! [ -e ~/.config/instantos/quickmenu ]
 then
     cd ~/.config/instantos
     git clone --depth=1 https://github.com/paperbenni/quickmenus quickmenu
+fi
+
+zsh -c "source ~/.zshrc && echo 'installed zinit'"
+
+if [ -e ~/.zinit ]
+then
+    mkdir ~/.zinit/completions
+    curl https://raw.githubusercontent.com/GothenburgBitFactory/taskwarrior/2.6.0/scripts/zsh/_task > ~/.zinit/completions/_task
 fi
 
 echo "finished setting up paperbenni's termux"

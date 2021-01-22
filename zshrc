@@ -26,6 +26,8 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait"1" lucid
 zinit light zsh-users/zsh-completions
 zinit ice wait"1" lucid
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
 
 autoload -Uz compinit
 compinit
