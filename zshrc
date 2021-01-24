@@ -77,11 +77,16 @@ pullmusic(){
     rclone sync -P music:Music "$MUSIC"
 }
 
-alias a="cd ~/storage/shared || termux-setup-storage"
+alias s="cd ~/storage/shared || termux-setup-storage"
 alias q=exit
 alias v=nvim
 alias t=task
 alias g=git
+alias tc="task status:comlpeted"
+alias ta="task add"
+alias a=yatext
+compdef _task yatext
+
 
 zstyle ':completion:*' menu yes select
 
