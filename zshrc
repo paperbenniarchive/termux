@@ -41,7 +41,7 @@ set -o vi
 
 export PATH=$PATH:~/bin
 
-if [ -e ~/storage/shared/external-1/Music ]
+if [ -e ~/storage/external-1/Music ]
 then
     export MUSIC="$HOME/storage/external-1/Music"
 else
