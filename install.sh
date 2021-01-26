@@ -12,11 +12,10 @@ echo "installing paperbenni's termux config"
 
 checkcommand() {
     if ! command -v "$1" &>/dev/null; then
-	if [ -z "$HASUPDATED" ]
-	then
-	    pkg upgrade
-	    export HASUPDATED=true
-	fi
+        if [ -z "$HASUPDATED" ]; then
+            pkg upgrade
+            export HASUPDATED=true
+        fi
         if [ -n "$2" ]; then
             apt-get install -y "$2"
         else
@@ -30,55 +29,51 @@ checkcommand git
 checkcommand ranger
 checkcommand nvim neovim
 
-if ! [ -e  ~/storage/shared ]
-then
+if ! [ -e ~/storage/shared ]; then
     termux-setup-storage
 fi
 
-if [ -e ./zshrc ] && git status &> /dev/null
-then
+if [ -e ./zshrc ] && git status &>/dev/null; then
     echo "found termux repo"
 else
     mkdir ~/workspace
-    cd ~/workspace
+    cd ~/workspace || exit 1
     git clone --depth=1 https://github.com/paperbenni/termux
-    cd termux
+    cd termux || exit 1
     git pull
 fi
 
-chmod +x *.sh
+chmod +x ./*.sh
 cat bashrc.sh >~/.bashrc
 cat zshrc >~/.zshrc
 
-if ! command -v i
-then
+mkdir ~/.termux
+cp -r ./boot ~/.termux
+
+if ! command -v i; then
     echo "installing instantos build tools"
-    cd ~/workspace
+    cd ~/workspace || exit 1
     git clone --depth=1 https://github.com/instantos/instantTOOLS
-    cd instantTOOLS
+    cd instantTOOLS || exit 1
     git pull
     ./install.sh
 fi
 
 [ -e ~/.config/instantos/default ] || mkdir -p ~/.config/instantos/default
 
+[ -e ~/.config/instantos/default/browser ] ||
+    ln -s "$(which termux-open-url)" ~/.config/instantos/default/browser
 
-[ -e ~/.config/instantos/default/browser ] || 
-	ln -s "$(which termux-open-url)" ~/.config/instantos/default/browser
-
-if ! [ -e ~/.config/instantos/quickmenu ]
-then
-    cd ~/.config/instantos
+if ! [ -e ~/.config/instantos/quickmenu ]; then
+    cd ~/.config/instantos || exit 1
     git clone --depth=1 https://github.com/paperbenni/quickmenus quickmenu
 fi
 
 zsh -c "source ~/.zshrc && echo 'installed zinit'"
 
-if [ -e ~/.zinit ]
-then
+if [ -e ~/.zinit ]; then
     mkdir ~/.zinit/completions
-    curl https://raw.githubusercontent.com/GothenburgBitFactory/taskwarrior/2.6.0/scripts/zsh/_task > ~/.zinit/completions/_task
+    curl https://raw.githubusercontent.com/GothenburgBitFactory/taskwarrior/2.6.0/scripts/zsh/_task >~/.zinit/completions/_task
 fi
 
 echo "finished setting up paperbenni's termux"
-
