@@ -27,6 +27,8 @@ checkcommand() {
 checkcommand curl
 checkcommand git
 checkcommand ranger
+checkcommand zsh
+checkcommand syncthing
 checkcommand nvim neovim
 
 if ! [ -e ~/storage/shared ]; then
