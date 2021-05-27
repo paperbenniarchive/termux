@@ -17,22 +17,32 @@ autoload -Uz _zinit
 
 ### End of Zinit's installer chunk
 
+setopt promptsubst
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory
+
 source "$HOME/.zinit/bin/zinit.zsh"
 
 
+zinit light zdharma/fast-syntax-highlighting
 zinit snippet OMZL::git.zsh
 zinit ice wait"1" lucid
-zinit light zsh-users/zsh-autosuggestions
-zinit ice wait"1" lucid
 zinit light zsh-users/zsh-completions
-zinit ice wait"1" lucid
-zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
 
 autoload -Uz compinit
 compinit
 
 zinit light agkozak/zsh-z
+
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC="true"
+
+zinit ice wait"1" lucid
+zinit light zsh-users/zsh-autosuggestions
+
 
 bindkey -e
 
@@ -91,3 +101,5 @@ compdef _task yatext
 zstyle ':completion:*' menu yes select
 
 bindkey '^R' history-incremental-search-backward
+
+eval "$(starship init zsh)"
