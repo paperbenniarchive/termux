@@ -87,6 +87,30 @@ pullmusic(){
     rclone sync -P music:Music "$MUSIC"
 }
 
+ws() {
+    [ -e ~/wiki/ ] || {
+        echo 'wiki not found' && return 1
+    }
+    cd ~/wiki || return 1
+    if git diff-index --quiet HEAD --; then
+        echo 'all up to date'
+    else
+        echo 'updating'
+
+        if ! ssh-add -l &> /dev/null
+        then
+            eval "$(ssh-agent)"
+            ssh-add
+        fi
+
+        git pull
+        git add -A
+        git commit -m 'updates'
+        git push origin master
+    fi
+
+}
+
 alias s="cd ~/storage/shared || termux-setup-storage"
 alias q=exit
 alias v=nvim
