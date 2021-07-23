@@ -30,6 +30,7 @@ checkcommand ranger
 checkcommand zsh
 checkcommand syncthing
 checkcommand nvim neovim
+checkcommand starship
 
 if ! [ -e ~/storage/shared ]; then
     termux-setup-storage
@@ -50,6 +51,7 @@ cat bashrc.sh >~/.bashrc
 cat zshrc >~/.zshrc
 
 mkdir ~/.termux
+chmod 755 ./boot/*
 cp -r ./boot ~/.termux
 
 if ! command -v i; then
@@ -77,5 +79,7 @@ if [ -e ~/.zinit ]; then
     mkdir ~/.zinit/completions
     curl https://raw.githubusercontent.com/GothenburgBitFactory/taskwarrior/2.6.0/scripts/zsh/_task >~/.zinit/completions/_task
 fi
+
+command -v zsh && chsh -s zsh
 
 echo "finished setting up paperbenni's termux"
