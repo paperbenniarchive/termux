@@ -53,6 +53,8 @@ cat zshrc >~/.zshrc
 mkdir ~/.termux
 chmod 755 ./boot/*
 cp -r ./boot ~/.termux
+mkdir ~/.shortcuts
+cp ./widgets/* ~/.shortcuts/
 
 if ! command -v i; then
     echo "installing instantos build tools"
