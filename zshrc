@@ -92,8 +92,11 @@ alias q=exit
 alias v=nvim
 alias t=task
 alias g=git
+alias lg=lazygit
+alias vv="nvim ."
 alias tc="task status:comlpeted"
 alias ta="task add"
+alias td="yatext today"
 alias a=yatext
 compdef _task yatext
 
