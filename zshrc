@@ -107,6 +107,13 @@ bindkey '^R' history-incremental-search-backward
 
 eval "$(starship init zsh)"
 
+sshh(){
+    eval "$(ssh-agent)"
+    ssh-add
+}
+
+export PATH="$PATH:$PREFIX/usr/local/bin"
+
 ws() {
     [ -e ~/wiki/ ] || {
         echo 'wiki not found' && return 1
