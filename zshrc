@@ -108,8 +108,11 @@ bindkey '^R' history-incremental-search-backward
 eval "$(starship init zsh)"
 
 sshh(){
-    eval "$(ssh-agent)"
-    ssh-add
+    if ! ssh-add -l &> /dev/null
+    then
+        eval "$(ssh-agent)"
+        ssh-add
+    fi
 }
 
 export PATH="$PATH:$PREFIX/usr/local/bin"
