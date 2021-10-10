@@ -25,6 +25,7 @@ checkcommand() {
 }
 
 checkcommand curl
+checkcommand stow
 checkcommand git
 checkcommand ranger
 checkcommand zsh
@@ -46,15 +47,7 @@ else
     git pull
 fi
 
-chmod +x ./*.sh
-cat bashrc.sh >~/.bashrc
-cat zshrc >~/.zshrc
-
-mkdir ~/.termux
-chmod 755 ./boot/*
-cp -r ./boot ~/.termux
-mkdir ~/.shortcuts
-cp ./widgets/* ~/.shortcuts/
+stow dotfiles
 
 if ! command -v i; then
     echo "installing instantos build tools"
